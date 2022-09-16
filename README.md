@@ -8,8 +8,11 @@
 2)/buy/{id} - для получения номера сессии и перенаправления на страницу оплаты
 ```
 
+Для просмотра запущенного сервера воспользуйтесь данными ссылками:
 ```
-http://
+http://158.160.1.54/item/1/
+http://158.160.1.54/item/2/
+http://158.160.1.54/item/3/
 ```
 
 ### Технологии:
@@ -26,45 +29,46 @@ http://
 ```
 git clone 'ссылка на репозиторий'
 ```
+Создайте файл .env в папке infra и пропишите в нем переменные окружения следующим образом:
 
 ```
-cd API_stripe_payment
-```
-
-Cоздайте и активируйте виртуальное окружение:
-
-```
-python -m venv venv
-```
-
-```
-source venv/bin/activate
-```
-```
-python -m pip install --upgrade pip
-```
-
-Установите зависимости из файла requirements.txt:
+DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
+DB_NAME= # имя базы данных
+POSTGRES_USER= # логин для подключения к базе данных
+POSTGRES_PASSWORD= # пароль для подключения к БД (установите свой)
+DB_HOST=db # название сервиса (контейнера)
+DB_PORT=5432 # порт для подключения к БД
+URL_PATH = хост, на котором вы будете запускать сервер
+STRIPE_SK= secret key (необходим аккаунт на сайте https://dashboard.stripe.com/)
+STRIPE_PK= public key (необходим аккаунт на сайте https://dashboard.stripe.com/
 
 ```
-pip install -r requirements.txt
+Из папки, в которой находится файл docker-compose.yaml выполните сборку контейнеров с помощью команды:
+
+```
+sudo docker-compose up -d --build 
 ```
 
 Выполните миграции:
 
 ```
-python manage.py migrate
+sudo docker-compose exec web python manage.py migrate 
 ```
 
-Создайте .env файл в директории проекта и заполните значения переменных (необходим аккаунт на сайте https://dashboard.stripe.com/):
+Создайте суперпользователя:
 
 ```
-STRIPE_SK=
-STRIPE_PK=
+sudo docker-compose exec web python manage.py createsuperuser
 ```
 
-Запустите проект:
+Соберите статику:
 
 ```
-python manage.py runserver
+sudo docker-compose exec web python manage.py collectstatic --no-input  
+```
+
+Войдите в админку:
+
+```
+http://localhost/admin/
 ```
