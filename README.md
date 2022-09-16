@@ -1,4 +1,4 @@
-##  Проект "API_stripe_payment"
+##  Проект "api_stripe_payment"
 
 ### Описание проекта:
 
