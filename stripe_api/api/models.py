@@ -1,6 +1,12 @@
 from django.db import models
 
 
+CHOICES = (
+    ("eur", "eur"),
+    ("usd", "usd"),
+)
+
+
 class Item(models.Model):
     name = models.CharField(
         verbose_name='Name',
@@ -11,6 +17,11 @@ class Item(models.Model):
     )
     price = models.IntegerField(
         verbose_name='Price',
+    )
+    currency = models.CharField(
+        verbose_name="Currency",
+        max_length=10,
+        choices=CHOICES,
     )
 
     class Meta:

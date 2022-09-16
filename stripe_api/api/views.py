@@ -12,6 +12,7 @@ load_dotenv('../infra/.env')
 
 
 stripe.api_key = os.getenv('STRIPE_SK')
+url_base = os.getenv('URL_PATH')
 
 
 @api_view(['GET'])
@@ -21,10 +22,10 @@ def create_payment(request, item_id):
     product = stripe.Product.create(name=item.name)
     price = stripe.Price.create(
         unit_amount=item.price * 100,
-        currency="eur",
+        currency=item.currency,
         product=product,
     )
-    items = ["http://localhost/", "item", str(item_id)]
+    items = [url_base, "item", str(item_id)]
     url = "/".join(
         [
             (u.strip("/") if index + 1 < len(items) else u.lstrip("/")) for index, u in enumerate(items)
@@ -42,7 +43,6 @@ def create_payment(request, item_id):
         mode="payment",
         payment_method_types=["card",]
     )
-    print(response["id"])
     return Response(response["id"])
 
 
