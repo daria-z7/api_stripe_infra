@@ -38,7 +38,7 @@ POSTGRES_USER= # логин для подключения к базе данны
 POSTGRES_PASSWORD= # пароль для подключения к БД (установите свой)
 DB_HOST=db # название сервиса (контейнера)
 DB_PORT=5432 # порт для подключения к БД
-URL_PATH = хост, на котором вы будете запускать сервер (в примере http://158.160.1.54/)
+URL_PATH = хост, на котором вы будете запускать сервер (# http://localhost)
 STRIPE_SK= secret key (необходим аккаунт на сайте https://dashboard.stripe.com/)
 STRIPE_PK= public key (необходим аккаунт на сайте https://dashboard.stripe.com/
 
